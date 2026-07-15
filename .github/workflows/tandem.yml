@@ -1,0 +1,24 @@
+  name: Tandem security analysis
+
+  on:
+    workflow_dispatch:
+    push:
+      branches:
+        - v2
+
+  permissions:
+    contents: read
+
+  jobs:
+    tandem:
+      runs-on: ubuntu-latest
+      timeout-minutes: 35
+
+      steps:
+        - name: Analyze Mailtrain
+          uses: andrewmw94/tandem-action@v1
+          with:
+            api-key: ${{ secrets.TANDEM_API_TOKEN }}
+            entrypoint: server/package.json
+            fail-on-findings: "false"
+            timeout-seconds: "1800"
